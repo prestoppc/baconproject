@@ -4,6 +4,8 @@ using System.Collections;
 public class AdamsController : MonoBehaviour {
 
     private Camera mainCamera;
+
+    public GunController theGun; 
     // Use this for initialization
     void Start ()
     {
@@ -23,6 +25,15 @@ public class AdamsController : MonoBehaviour {
             Debug.DrawLine(cameraRay.origin, pointToLook, Color.blue);
 
             transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
+        }
+
+        if(Input.GetMouseButtonDown(0))
+        {
+            theGun.bIsFiring = true; 
+        }
+        if(Input.GetMouseButtonUp(0))
+        {
+            theGun.bIsFiring = false; 
         }
     }
 }
