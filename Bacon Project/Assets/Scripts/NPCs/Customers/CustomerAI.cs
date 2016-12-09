@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BaseAI : MonoBehaviour {
+public class CustomerAI : MonoBehaviour {
 
-    public GameObject testPos; // delete this when finished
+    public GameObject testPos;// delete this
 
 	// Use this for initialization
 	void Start () {
@@ -14,5 +14,6 @@ public class BaseAI : MonoBehaviour {
 	void Update () {
         if (testPos != null)
             GetComponent<NavMeshAgent>().SetDestination(testPos.transform.position);
+
     }
 }
