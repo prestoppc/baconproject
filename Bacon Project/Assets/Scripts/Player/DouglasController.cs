@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AdamsController : MonoBehaviour {
+public class DouglasController : MonoBehaviour {
 
     private Camera mainCamera;
 
-    public GunController theGun; 
+    public GunController theGun;
+
+    private float rollSpeed = 10;
+    public bool bIsRolling = false;
+    private float rollCounter;
     // Use this for initialization
     void Start ()
     {
@@ -19,7 +23,7 @@ public class AdamsController : MonoBehaviour {
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
         float rayLength;
 
-        if (groundPlane.Raycast(cameraRay, out rayLength))
+        if (groundPlane.Raycast(cameraRay, out rayLength) && !bIsRolling)
         {
             Vector3 pointToLook = cameraRay.GetPoint(rayLength);
             Debug.DrawLine(cameraRay.origin, pointToLook, Color.blue);
@@ -35,5 +39,22 @@ public class AdamsController : MonoBehaviour {
         {
             theGun.bIsFiring = false; 
         }
+        if(Input.GetKeyDown(KeyCode.Space) && !bIsRolling)
+        {
+            StartCoroutine("Roll");
+        }
+
+        if(bIsRolling)
+        {
+            transform.Translate(Vector3.forward * rollSpeed * Time.deltaTime);
+        }
+       
+    }
+
+    IEnumerator Roll()
+    {
+        bIsRolling = true;
+        yield return new WaitForSeconds(.25f);
+        bIsRolling = false;
     }
 }
