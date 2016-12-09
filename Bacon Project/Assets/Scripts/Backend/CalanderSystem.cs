@@ -6,7 +6,7 @@ public class CalanderSystem : MonoBehaviour
 {
     //Attach to main camera and Dont Destroy On Loads
     public Text CurrentDayDisplay;
-    private int CurrentDay;
+    public int CurrentDay;
     public int FinishDay;
     public bool gamePause;
 
