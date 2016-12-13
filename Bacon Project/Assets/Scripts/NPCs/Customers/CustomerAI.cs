@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CustomerAI : MonoBehaviour {
 
-    public GameObject testPos;// delete this
+    public GameObject CurrentWaypoint;
 
 	// Use this for initialization
 	void Start () {
@@ -12,8 +12,8 @@ public class CustomerAI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (testPos != null)
-            GetComponent<NavMeshAgent>().SetDestination(testPos.transform.position);
+        if (CurrentWaypoint != null)
+            GetComponent<NavMeshAgent>().SetDestination(CurrentWaypoint.transform.position);
 
     }
 }

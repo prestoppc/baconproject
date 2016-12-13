@@ -35,7 +35,7 @@ public class AISpawner : MonoBehaviour {
             {
                 GameObject thingGO = Instantiate(thingsToSpawn[Random.Range(0, thingsToSpawn.Count)], possibleSpawnPositions[Random.Range(0, possibleSpawnPositions.Count)].transform.position, Quaternion.identity) as GameObject;
                 if (thingGO.tag == "Customer")
-                    thingGO.GetComponent<CustomerAI>().testPos = gameObject;
+                    thingGO.GetComponent<CustomerAI>().CurrentWaypoint = gameObject;
                 else
                     thingGO.GetComponent<BaseAI>().testPos = gameObject;
             } 
