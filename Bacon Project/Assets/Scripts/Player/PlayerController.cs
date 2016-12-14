@@ -9,10 +9,12 @@ public class PlayerController : MonoBehaviour {
     private Vector3 moveInput;
     private Vector3 moveVelocity;
 
+    DouglasController Douglas; 
 	// Use this for initialization
 	void Start ()
     {
         myRigidbody = GetComponent<Rigidbody>();
+        Douglas = GetComponent<DouglasController>();
 	}
 	
 	// Update is called once per frame
@@ -33,7 +35,10 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate()
     {
-        Move();
+        if(Douglas.bIsRolling!=true)
+        {
+            Move();
+        }
     }
 
     void Move()
