@@ -5,7 +5,9 @@ public class DouglasController : MonoBehaviour {
 
     private Camera mainCamera;
 
-    public GunController theGun;
+    public GunController currentGun;
+    public GunController[] guns;
+    private int currentGunIndex = 0;
 
     private float rollSpeed = 5;
     public bool bIsRolling = false;
@@ -13,6 +15,7 @@ public class DouglasController : MonoBehaviour {
     private float rollDirX;
     private float rollDirY;
     private Vector3 rollDirection; 
+
 
     //This is a temporary variable this is going to stay here til we figure out how controller and keyboard work together - Jeffrey
     public bool controller;
@@ -24,6 +27,7 @@ public class DouglasController : MonoBehaviour {
     void Start ()
     {
         mainCamera = FindObjectOfType<Camera>();
+        currentGun = guns[currentGunIndex];
     }
 	
 	// Update is called once per frame
@@ -54,13 +58,13 @@ public class DouglasController : MonoBehaviour {
 
         //Hey this is Jeff change these if statements so it works with the controller
         //P.S. I love you eric will you marry me O-0 <---- thats the ring
-        if(Input.GetMouseButtonDown(0) || scr_InputManager.GetButt(BUTTON.X, UPDOWN.DOWN))
+        if(Input.GetMouseButton(0) || scr_InputManager.GetButt(BUTTON.X, UPDOWN.DOWN))
         {
-            theGun.bIsFiring = true; 
+            currentGun.bIsFiring = true; 
         }
-        if(Input.GetMouseButtonUp(0) || scr_InputManager.GetButt(BUTTON.X, UPDOWN.UP))
+        else
         {
-            theGun.bIsFiring = false; 
+            currentGun.bIsFiring = false;
         }
 
         /// Roll Input
@@ -77,6 +81,14 @@ public class DouglasController : MonoBehaviour {
         {
             transform.Translate(rollDirection * rollSpeed * Time.deltaTime, Space.World);
         }
+
+        /// Changing Guns
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+            ChangeGun(0);
+        if(Input.GetKeyDown(KeyCode.Alpha2))
+            ChangeGun(1);
+        if(Input.GetKeyDown(KeyCode.Alpha3))
+            ChangeGun(2);
     }
 
     IEnumerator Roll()
@@ -84,5 +96,12 @@ public class DouglasController : MonoBehaviour {
         bIsRolling = true;
         yield return new WaitForSeconds(.25f);
         bIsRolling = false;
+    }
+
+    void ChangeGun(int num)
+    {
+        currentGun.bIsFiring = false; // Stop firing current gun
+        currentGunIndex = num; // Select chosen gun
+        currentGun = guns[currentGunIndex]; // Set selected gun as active gun
     }
 }
