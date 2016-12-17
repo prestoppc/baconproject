@@ -17,8 +17,9 @@ public class DouglasController : MonoBehaviour {
     public bool bIsRolling = false;
     private float rollDirX;
     private float rollDirY;
-    private Vector3 rollDirection; 
+    private Vector3 rollDirection;
 
+    PlayerController pc;
 
     //This is a temporary variable this is going to stay here til we figure out how controller and keyboard work together - Jeffrey
     public bool controller;
@@ -29,6 +30,7 @@ public class DouglasController : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        pc = GetComponent<PlayerController>();
         mainCamera = FindObjectOfType<Camera>();
         currentGun = guns[currentGunIndex];
     }
@@ -104,8 +106,10 @@ public class DouglasController : MonoBehaviour {
 
     IEnumerator Roll()
     {
+        pc.bCanMove = false;
         bIsRolling = true;
         yield return new WaitForSeconds(.25f);
+        pc.bCanMove = true;
         bIsRolling = false;
     }
 
