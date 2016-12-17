@@ -7,9 +7,12 @@ public class DouglasController : MonoBehaviour {
 
     public GunController theGun;
 
-    private float rollSpeed = 10;
+    private float rollSpeed = 5;
     public bool bIsRolling = false;
     private float rollCounter;
+    private float rollDirX;
+    private float rollDirY;
+    private Vector3 rollDirection; 
     // Use this for initialization
     void Start ()
     {
@@ -39,16 +42,21 @@ public class DouglasController : MonoBehaviour {
         {
             theGun.bIsFiring = false; 
         }
-        if(Input.GetKeyDown(KeyCode.Space) && !bIsRolling)
+
+        /// Roll Input
+        if(Input.GetKeyDown(KeyCode.Space) && !bIsRolling) // If currently not rolling
         {
+            rollDirX = Input.GetAxisRaw("Horizontal"); 
+            rollDirY = Input.GetAxisRaw("Vertical");
+            rollDirection = new Vector3(rollDirX, 0, rollDirY);
+
             StartCoroutine("Roll");
         }
 
         if(bIsRolling)
         {
-            transform.Translate(Vector3.forward * rollSpeed * Time.deltaTime);
+            transform.Translate(rollDirection * rollSpeed * Time.deltaTime, Space.World);
         }
-       
     }
 
     IEnumerator Roll()
