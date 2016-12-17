@@ -7,11 +7,14 @@ public class DouglasController : MonoBehaviour {
 
     public GunController currentGun;
     public GunController[] guns;
+
     private int currentGunIndex = 0;
+
+    private int numGrenades = 3;
+    public GrenadeLauncher grenadeLauncher; 
 
     private float rollSpeed = 5;
     public bool bIsRolling = false;
-    private float rollCounter;
     private float rollDirX;
     private float rollDirY;
     private Vector3 rollDirection; 
@@ -58,6 +61,7 @@ public class DouglasController : MonoBehaviour {
 
         //Hey this is Jeff change these if statements so it works with the controller
         //P.S. I love you eric will you marry me O-0 <---- thats the ring
+        /// Gun Fire
         if(Input.GetMouseButton(0) || scr_InputManager.GetButt(BUTTON.X, UPDOWN.DOWN))
         {
             currentGun.bIsFiring = true; 
@@ -65,6 +69,13 @@ public class DouglasController : MonoBehaviour {
         else
         {
             currentGun.bIsFiring = false;
+        }
+
+        /// Grenade Throw
+        if(Input.GetMouseButtonDown(1) && numGrenades >0)
+        {
+            grenadeLauncher.ThrowGrenade();
+            numGrenades--;
         }
 
         /// Roll Input
