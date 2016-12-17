@@ -3,24 +3,38 @@ using System.Collections;
 
 public class GrenadeController : MonoBehaviour {
 
-    private  float thrust = 300;
+    private float radius = 2; // explosion radius
+    private float damage = 10; // explosion damage
+    private float explosionDelay = 3;
+
     Rigidbody rb;
+    public LayerMask layersToDamage; 
+    
     // Use this for initialization
     void Start ()
     {
-        Destroy(this.gameObject, 3f);
-        rb = GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * thrust);
+        StartCoroutine(GrenadeExplode(explosionDelay));
     }
 
-    // Update is called once per frame
-    void Update ()
+    IEnumerator GrenadeExplode(float delay)
     {
+        yield return new WaitForSeconds(delay);
 
+        Collider[] hitColliders = Physics.OverlapSphere(this.transform.position, radius, layersToDamage);
+
+        int i = 0;
+        while(i<hitColliders.Length)
+        {
+            Debug.Log("Hit " + hitColliders[i].name);
+            i++;
+        }
+        Destroy(this.gameObject);
     }
 
-    void FixedUpdate()
+    private void OnDrawGizmos() // Displays grenade radius
     {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, radius);
     }
 
 }
