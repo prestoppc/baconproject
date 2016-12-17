@@ -10,12 +10,9 @@ public class DouglasController : MonoBehaviour {
     private float rollSpeed = 5;
     public bool bIsRolling = false;
     private float rollCounter;
-<<<<<<< HEAD
     private float rollDirX;
     private float rollDirY;
     private Vector3 rollDirection; 
-=======
-    public GunController theGun;
 
     //This is a temporary variable this is going to stay here til we figure out how controller and keyboard work together - Jeffrey
     public bool controller;
@@ -23,7 +20,6 @@ public class DouglasController : MonoBehaviour {
     //This variable is for the rotation of the controller which is the speed - Jeffrey
     private float speed = 2f;
 
->>>>>>> 9685822ddb33a9502cad850421f4ded2a955e3df
     // Use this for initialization
     void Start ()
     {
@@ -41,17 +37,10 @@ public class DouglasController : MonoBehaviour {
 
             if (groundPlane.Raycast(cameraRay, out rayLength) && !bIsRolling)
             {
-                Ray cameraRay = mainCamera.ScreenPointToRay(Input.mousePosition);
-                Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-                float rayLength;
+                Vector3 pointToLook = cameraRay.GetPoint(rayLength);
+                Debug.DrawLine(cameraRay.origin, pointToLook, Color.blue);
 
-                if (groundPlane.Raycast(cameraRay, out rayLength))
-                {
-                    Vector3 pointToLook = cameraRay.GetPoint(rayLength);
-                    Debug.DrawLine(cameraRay.origin, pointToLook, Color.blue);
-
-                    transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
-                }
+                transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
             }
         }
         //This is to rotate the player but feels kinda weird with X being shoot since you basiclly have to take thumb off the stick and hit X - Jeffrey
