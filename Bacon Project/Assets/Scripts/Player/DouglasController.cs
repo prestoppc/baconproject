@@ -10,7 +10,7 @@ public class DouglasController : MonoBehaviour {
     private float rollSpeed = 10;
     public bool bIsRolling = false;
     private float rollCounter;
-    public GunController theGun;
+
 
     //This is a temporary variable this is going to stay here til we figure out how controller and keyboard work together - Jeffrey
     public bool controller;
@@ -35,17 +35,10 @@ public class DouglasController : MonoBehaviour {
 
             if (groundPlane.Raycast(cameraRay, out rayLength) && !bIsRolling)
             {
-                Ray cameraRay = mainCamera.ScreenPointToRay(Input.mousePosition);
-                Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-                float rayLength;
-
-                if (groundPlane.Raycast(cameraRay, out rayLength))
-                {
                     Vector3 pointToLook = cameraRay.GetPoint(rayLength);
                     Debug.DrawLine(cameraRay.origin, pointToLook, Color.blue);
 
                     transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
-                }
             }
         }
         //This is to rotate the player but feels kinda weird with X being shoot since you basiclly have to take thumb off the stick and hit X - Jeffrey
@@ -54,20 +47,24 @@ public class DouglasController : MonoBehaviour {
             if (scr_InputManager.GetStickorDpad(STICKS.RIGHT, AXIS_XY.X) != 0 || scr_InputManager.GetStickorDpad(STICKS.RIGHT, AXIS_XY.Y) != 0)
             {
                 transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(scr_InputManager.GetStickorDpad(STICKS.RIGHT, AXIS_XY.X), scr_InputManager.GetStickorDpad(STICKS.RIGHT, AXIS_XY.Y)) * Mathf.Rad2Deg, Vector3.up);
+                theGun.bIsFiring = true;
             }
+            else
+                theGun.bIsFiring = false;
         }
 
         //Hey this is Jeff change these if statements so it works with the controller
         //P.S. I love you eric will you marry me O-0 <---- thats the ring
-        if(Input.GetMouseButtonDown(0) || scr_InputManager.GetButt(BUTTON.X, UPDOWN.DOWN))
+        if(Input.GetMouseButtonDown(0))
         {
             theGun.bIsFiring = true; 
         }
-        if(Input.GetMouseButtonUp(0) || scr_InputManager.GetButt(BUTTON.X, UPDOWN.UP))
+        if(Input.GetMouseButtonUp(0))
         {
             theGun.bIsFiring = false; 
         }
-        if(Input.GetKeyDown(KeyCode.Space) && !bIsRolling)
+        //Hey this is Jeff again added controller code to the roll love you Eric xoxoxoxoxox
+        if((Input.GetKeyDown(KeyCode.Space) || scr_InputManager.GetButt(BUTTON.A, UPDOWN.DOWN)) && !bIsRolling)
         {
             StartCoroutine("Roll");
         }
