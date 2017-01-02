@@ -51,6 +51,16 @@ public class DouglasController : MonoBehaviour {
 
                 transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
             }
+
+            /// Gun Fire
+            if (Input.GetMouseButton(0))
+            {
+                currentGun.bIsFiring = true;
+            }
+            else
+            {
+                currentGun.bIsFiring = false;
+            }
         }
         //This is to rotate the player but feels kinda weird with X being shoot since you basiclly have to take thumb off the stick and hit X - Jeffrey
         else
@@ -58,22 +68,10 @@ public class DouglasController : MonoBehaviour {
             if (scr_InputManager.GetStickorDpad(STICKS.RIGHT, AXIS_XY.X) != 0 || scr_InputManager.GetStickorDpad(STICKS.RIGHT, AXIS_XY.Y) != 0)
             {
                 transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(scr_InputManager.GetStickorDpad(STICKS.RIGHT, AXIS_XY.X), scr_InputManager.GetStickorDpad(STICKS.RIGHT, AXIS_XY.Y)) * Mathf.Rad2Deg, Vector3.up);
-                theGun.bIsFiring = true;
+                currentGun.bIsFiring = true;
             }
             else
-                theGun.bIsFiring = false;
-        }
-
-        //Hey this is Jeff change these if statements so it works with the controller
-        //P.S. I love you eric will you marry me O-0 <---- thats the ring
-        /// Gun Fire
-        if(Input.GetMouseButton(0) || scr_InputManager.GetButt(BUTTON.X, UPDOWN.DOWN))
-        {
-            currentGun.bIsFiring = true; 
-        }
-        else
-        {
-            currentGun.bIsFiring = false;
+                currentGun.bIsFiring = false;
         }
 
         /// Grenade Throw
