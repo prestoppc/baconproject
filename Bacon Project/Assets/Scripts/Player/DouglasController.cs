@@ -58,7 +58,10 @@ public class DouglasController : MonoBehaviour {
             if (scr_InputManager.GetStickorDpad(STICKS.RIGHT, AXIS_XY.X) != 0 || scr_InputManager.GetStickorDpad(STICKS.RIGHT, AXIS_XY.Y) != 0)
             {
                 transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(scr_InputManager.GetStickorDpad(STICKS.RIGHT, AXIS_XY.X), scr_InputManager.GetStickorDpad(STICKS.RIGHT, AXIS_XY.Y)) * Mathf.Rad2Deg, Vector3.up);
+                theGun.bIsFiring = true;
             }
+            else
+                theGun.bIsFiring = false;
         }
 
         //Hey this is Jeff change these if statements so it works with the controller
@@ -81,7 +84,7 @@ public class DouglasController : MonoBehaviour {
         }
 
         /// Roll Input
-        if(Input.GetKeyDown(KeyCode.Space) && !bIsRolling) // If currently not rolling
+        if ((Input.GetKeyDown(KeyCode.Space) || scr_InputManager.GetButt(BUTTON.A, UPDOWN.DOWN)) && !bIsRolling) // If currently not rolling
         {
             rollDirX = Input.GetAxisRaw("Horizontal"); 
             rollDirY = Input.GetAxisRaw("Vertical");
